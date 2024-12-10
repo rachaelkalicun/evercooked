@@ -1,3 +1,5 @@
+<%= turbo_stream_from @dish %>
+
 <p style="color: green"><%= notice %></p>
 
 <%= render @dish %>
@@ -8,3 +10,5 @@
 
   <%= button_to "Destroy this dish", @dish, method: :delete %>
 </div>
+
+<%= render "comments/comments", dish: @dish %>

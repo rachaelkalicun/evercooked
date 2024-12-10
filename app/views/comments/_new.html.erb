@@ -1,0 +1,5 @@
+<%= form_with(model: [ dish, Comment.new ], local: true) do |form| %>
+	Your comment:
+	<%= form.text_area :content, size: "20x5" %><br>
+	<%= form.submit %>
+<% end %>

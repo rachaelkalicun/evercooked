@@ -9,4 +9,9 @@
     <%= dish.body %>
   </p>
 
+	<p>
+    <strong>Updated at:</strong>
+    <%= time_tag dish.updated_at, "data-local": "time", "data-format": "%B %e"  %>
+  </p>
+	
 </div>
