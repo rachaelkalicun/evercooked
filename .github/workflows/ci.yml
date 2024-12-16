@@ -3,7 +3,7 @@ name: CI
 on:
   pull_request:
   push:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   scan_ruby:
@@ -35,9 +35,6 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      # - name: Scan for security vulnerabilities in JavaScript dependencies
-      #   run: bin/importmap audit
-
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -66,9 +63,6 @@ jobs:
       - name: Install packages
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable curl libjemalloc2 libvips sqlite3
 
-      - name: yarn
-        run: yarn
-      
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -77,6 +71,15 @@ jobs:
         with:
           ruby-version: .ruby-version
           bundler-cache: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          cache: yarn
+          node-version: 18
+
+      - name: Install Yarn packages
+        run: bin/yarn install --immutable
 
       - name: Run tests
         env:
