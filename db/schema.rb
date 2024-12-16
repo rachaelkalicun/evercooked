@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_16_180500) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_16_190336) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -55,6 +55,15 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_16_180500) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["dish_id"], name: "index_comments_on_dish_id"
+  end
+
+  create_table "dish_entries", force: :cascade do |t|
+    t.integer "dish_id"
+    t.datetime "date_cooked"
+    t.text "recipe_long_form"
+    t.text "backstory"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "dishes", force: :cascade do |t|
