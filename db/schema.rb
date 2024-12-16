@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_16_190336) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_16_191754) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -58,7 +58,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_16_190336) do
   end
 
   create_table "dish_entries", force: :cascade do |t|
-    t.integer "dish_id"
+    t.integer "dish_id", null: false
     t.datetime "date_cooked"
     t.text "recipe_long_form"
     t.text "backstory"
