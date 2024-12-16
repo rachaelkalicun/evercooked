@@ -2,8 +2,8 @@
 
 one:
   dish: one
-  context: MyText
+  content: MyText
 
 two:
   dish: two
-  context: MyText
+  content: MyText
