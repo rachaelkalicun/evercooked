@@ -14,7 +14,6 @@ class DishesTest < ApplicationSystemTestCase
     visit dishes_url
     click_on "New dish"
 
-    fill_in "Body", with: @dish.body
     fill_in "Title", with: @dish.title
     click_on "Create Dish"
 
@@ -26,7 +25,6 @@ class DishesTest < ApplicationSystemTestCase
     visit dish_url(@dish)
     click_on "Edit this dish", match: :first
 
-    fill_in "Body", with: @dish.body
     fill_in "Title", with: @dish.title
     click_on "Update Dish"
 
