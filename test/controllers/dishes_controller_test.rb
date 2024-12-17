@@ -3,7 +3,6 @@ require "test_helper"
 class DishesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @dish = dishes(:one)
-    @comment = comments(:one)
   end
 
   test "should get index" do
@@ -41,7 +40,6 @@ class DishesControllerTest < ActionDispatch::IntegrationTest
 
   test "should destroy dish" do
     assert_difference("Dish.count", -1) do
-      @comment.destroy
       delete dish_url(@dish)
     end
 

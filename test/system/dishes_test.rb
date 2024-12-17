@@ -14,7 +14,7 @@ class DishesTest < ApplicationSystemTestCase
     visit dishes_url
     click_on "New dish"
 
-    fill_in "Title", with: @dish.title
+    fill_in "Name", with: @dish.name
     click_on "Create Dish"
 
     assert_text "Dish was successfully created"
@@ -25,7 +25,7 @@ class DishesTest < ApplicationSystemTestCase
     visit dish_url(@dish)
     click_on "Edit this dish", match: :first
 
-    fill_in "Title", with: @dish.title
+    fill_in "Name", with: @dish.name
     click_on "Update Dish"
 
     assert_text "Dish was successfully updated"
