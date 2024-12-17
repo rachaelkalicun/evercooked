@@ -65,6 +65,6 @@ class DishesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def dish_params
-      params.expect(dish: [ :title, :body ])
+      params.expect(dish: [ :name, :description ])
     end
 end
