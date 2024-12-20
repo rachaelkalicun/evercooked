@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_17_193134) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_20_171813) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -66,6 +66,13 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_17_193134) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "dish_entries_occasions", id: false, force: :cascade do |t|
+    t.integer "dish_entries_id"
+    t.integer "occasions_id"
+    t.index ["dish_entries_id"], name: "index_dish_entries_occasions_on_dish_entries_id"
+    t.index ["occasions_id"], name: "index_dish_entries_occasions_on_occasions_id"
+  end
+
   create_table "dishes", force: :cascade do |t|
     t.text "name", null: false
     t.text "description"
@@ -76,6 +83,12 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_17_193134) do
   create_table "holidays", force: :cascade do |t|
     t.string "name"
     t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "occasions", force: :cascade do |t|
+    t.integer "holiday_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
