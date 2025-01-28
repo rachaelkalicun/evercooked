@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :preparations
   resources :dishes do
     resources :comments
   end

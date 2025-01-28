@@ -1,5 +1,5 @@
-class RemoveDishEntryIdFromOccasions < ActiveRecord::Migration[8.0]
+class RemovePreparationIdFromOccasions < ActiveRecord::Migration[8.0]
   def change
-    remove_column :occasions, :dish_entry_id, :integer
+    remove_column :occasions, :preparation_id, :integer
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_20_171813) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_15_185438) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -57,22 +57,6 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_20_171813) do
     t.index ["dish_id"], name: "index_comments_on_dish_id"
   end
 
-  create_table "dish_entries", force: :cascade do |t|
-    t.integer "dish_id", null: false
-    t.datetime "date_cooked"
-    t.text "recipe_long_form"
-    t.text "backstory"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "dish_entries_occasions", id: false, force: :cascade do |t|
-    t.integer "dish_entries_id"
-    t.integer "occasions_id"
-    t.index ["dish_entries_id"], name: "index_dish_entries_occasions_on_dish_entries_id"
-    t.index ["occasions_id"], name: "index_dish_entries_occasions_on_occasions_id"
-  end
-
   create_table "dishes", force: :cascade do |t|
     t.text "name", null: false
     t.text "description"
@@ -91,8 +75,24 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_20_171813) do
     t.integer "holiday_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["holiday_id"], name: "index_occasions_on_holiday_id", unique: true
+  end
+
+  create_table "occasions_preparations", id: false, force: :cascade do |t|
+    t.integer "occasion_id"
+    t.integer "preparation_id"
+  end
+
+  create_table "preparations", force: :cascade do |t|
+    t.integer "dish_id", null: false
+    t.datetime "date_cooked"
+    t.text "recipe_long_form"
+    t.text "backstory"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "occasions", "holidays"
 end

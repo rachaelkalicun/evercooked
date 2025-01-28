@@ -1,0 +1,52 @@
+<% content_for :title, "New preparation" %>
+<% if @preparation && @preparation.errors.any? %>
+  <div class="alert alert-danger">
+    <ul>
+      <% @preparation.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+
+<%= form_with(model: @preparation || Preparation.new, local: true, data: { controller: "dish-holiday-form" }) do |f| %>
+
+  <div>
+    <%= f.label :dish_id, "Dish" %>
+    <%= f.collection_select(:dish_id, Dish.all, :id, :name, prompt: "Select an existing dish", data: { action: "change->dish-holiday-form#addNewDish" }) %>
+    <%= f.text_field :new_dish_name, placeholder: "Or enter a new dish name", data: { dish_holiday_form_target: "newDishField" } %>
+    <%= f.text_area :new_dish_description, placeholder: "Enter dish description (optional)", data: { dish_holiday_form_target: "newDishDescription" } %>
+  </div>
+
+  <div>
+    <%= f.label :holiday_id, "Holiday" %>
+    <%= f.collection_select(:holiday_id, Holiday.all, :id, :name, prompt: "Select an existing holiday", data: { action: "change->dish-holiday-form#addNewHoliday" }) %>
+    <%= f.text_field :new_holiday_name, placeholder: "Or enter a new holiday name", data: { dish_holiday_form_target: "newHolidayField" } %>
+    <%= f.text_area :new_holiday_description, placeholder: "Enter holiday description (optional)", data: { dish_holiday_form_target: "newHolidayDescription" } %>
+  </div>
+
+  <div>
+    <%= f.label :backstory, "Backstory" %>
+    <%= f.text_area :backstory %>
+  </div>
+
+  <div>
+    <%= f.label :recipe_long_form, "Recipe" %>
+    <%= f.text_area :recipe_long_form %>
+  </div>
+
+  <div>
+    <%= f.label :date_cooked, "Date Cooked" %>
+    <%= f.date_field :date_cooked %>
+  </div>
+
+  <%= f.submit "Save Preparation", class: "btn btn-primary" %>
+<% end %>
+
+
+<br>
+
+<div>
+  <%= link_to "Back to preparations", preparations_path %>
+</div>

@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one: 
+  dish_id: 1
+  date_cooked: 2023-10-01 12:00:00
+  recipe_long_form: "Boil pasta. Fry pancetta. Mix eggs and cheese. Combine all ingredients."
+  backstory: "This dish was created in Rome during World War II."
+  created_at: 2023-10-01 12:00:00
+  updated_at: 2023-10-01 12:00:00
+
+two: 
+  dish_id: 2
+  date_cooked: 2023-10-02 18:30:00
+  recipe_long_form: "Prepare dough. Add tomato sauce and cheese. Bake in oven. Add basil."
+  backstory: "Named after Queen Margherita of Savoy."
+  created_at: 2023-10-02 18:30:00
+  updated_at: 2023-10-02 18:30:00
