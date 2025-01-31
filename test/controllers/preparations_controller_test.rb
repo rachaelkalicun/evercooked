@@ -87,7 +87,6 @@ test "should create preparation with new dish and new holiday" do
     }
   end
 
-  # Check for Dish and Holiday
   dish = Dish.last
   holiday = Holiday.last
 
@@ -118,17 +117,12 @@ test "should not create preparation with missing required fields" do
   end
 
   assert_response :unprocessable_entity
-  assert_select "form" # Ensure the form is rendered again
+  assert_select "form"
 end
 
 test "should update preparation with valid data" do
   preparation = preparations(:one)
-  existing_dish = dishes(:one)  # Ensure the dish exists in fixtures
-  existing_holiday = holidays(:existing_holiday)  # Ensure a holiday exists in fixtures
-  existing_occasion = occasions(:existing_occasion) # Ensure an occasion is tied to this holiday
-
-  # Associate the preparation with an existing occasion for the holiday
-  preparation.occasions << existing_occasion
+  existing_dish = dishes(:one)
 
   patch preparation_path(preparation), params: {
     preparation: {
@@ -136,7 +130,7 @@ test "should update preparation with valid data" do
       backstory: "Updated backstory",
       recipe_long_form: "Updated recipe",
       date_cooked: Date.tomorrow,
-      holiday_id: existing_holiday.id  # Provide holiday_id to satisfy new logic
+      holiday_id: @existing_holiday.id
     }
   }
 
@@ -145,7 +139,7 @@ test "should update preparation with valid data" do
   assert_equal "Updated backstory", preparation.backstory
   assert_equal "Updated recipe", preparation.recipe_long_form
   assert_equal Date.tomorrow, preparation.date_cooked
-  assert_equal existing_dish.id, preparation.dish_id  # Ensure dish is updated
+  assert_equal existing_dish.id, preparation.dish_id
 end
 
 
@@ -160,7 +154,7 @@ test "should not update preparation with invalid data" do
   }
 
   assert_response :unprocessable_entity
-  assert_select "form" # Ensure the form is rendered again
+  assert_select "form"
 end
 
 test "should show preparation" do
@@ -190,17 +184,16 @@ end
     end
 
     assert_response :unprocessable_entity
-    assert_select "form" # Ensure the form is rendered again
+    assert_select "form"
   end
 
-  # Test that preparation can't be created with a new dish and a new holiday if both are invalid
   test "should not create preparation with invalid new dish and new holiday" do
     assert_no_difference([ "Dish.count", "Holiday.count", "Occasion.count", "Preparation.count" ]) do
       post preparations_path, params: {
         preparation: {
-          new_dish_name: "",  # Invalid dish name
+          new_dish_name: "",
           new_dish_description: "",
-          new_holiday_name: "",  # Invalid holiday name
+          new_holiday_name: "",
           new_holiday_description: "",
           backstory: "Test backstory with invalid dish and holiday",
           recipe_long_form: "Test recipe",
@@ -213,7 +206,6 @@ end
     assert_select "form"
   end
 
-  # Test that preparation can't be created if dish and holiday are both missing
   test "should not create preparation with missing dish and holiday" do
     assert_no_difference("Preparation.count") do
       post preparations_path, params: {
@@ -229,10 +221,8 @@ end
     assert_select "form"
   end
 
-  # Test that preparation can be updated with a new dish and a new holiday
   test "should update preparation with new dish and new holiday" do
     preparation = preparations(:one)
-    existing_occasion = occasions(:existing_occasion)
 
     assert_difference([ "Dish.count", "Holiday.count", "Occasion.count" ]) do
       patch preparation_path(preparation), params: {
@@ -257,7 +247,6 @@ end
     assert_equal Date.tomorrow, preparation.date_cooked
   end
 
-  # Test that preparation can't be updated if a new holiday is invalid
   test "should not update preparation with invalid new holiday" do
     preparation = preparations(:one)
 
@@ -275,7 +264,6 @@ end
     assert_select "form"
   end
 
-  # Test that preparation can be updated with valid new data
   test "should update preparation with valid new dish and new holiday" do
     preparation = preparations(:one)
 
@@ -304,7 +292,6 @@ end
     assert_equal Date.tomorrow, preparation.date_cooked
   end
 
-  # Test that the preparation destroy action works
   test "should destroy preparation" do
     preparation = preparations(:one)
     assert_difference("Preparation.count", -1) do
