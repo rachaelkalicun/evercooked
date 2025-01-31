@@ -1,6 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
 
-// Connects to data-controller="dish-holiday-form"
 export default class extends Controller {
   static targets = ["newDishField", "newHolidayField"];
 
@@ -9,24 +8,22 @@ export default class extends Controller {
   }
 
   addNewDish(event) {
-    const selectedValue = event.target.value;
-
+		const selectedValue = event.target.value;
     if (selectedValue) {
-      this.newDishFieldTarget.value = ""; // Clear new dish field
-      this.newDishFieldTarget.disabled = true; // Disable the input if a dish is selected
+      this.newDishFieldTarget.value = "";
+      this.newDishFieldTarget.disabled = true;
     } else {
-      this.newDishFieldTarget.disabled = false; // Enable the input for a new dish
+      this.newDishFieldTarget.disabled = false;
     }
   }
 
   addNewHoliday(event) {
     const selectedValue = event.target.value;
-
     if (selectedValue) {
-      this.newHolidayFieldTarget.value = ""; // Clear new holiday field
-      this.newHolidayFieldTarget.disabled = true; // Disable the input if a holiday is selected
+      this.newHolidayFieldTarget.value = "";
+      this.newHolidayFieldTarget.disabled = true;
     } else {
-      this.newHolidayFieldTarget.disabled = false; // Enable the input for a new holiday
+      this.newHolidayFieldTarget.disabled = false;
     }
   }
 }

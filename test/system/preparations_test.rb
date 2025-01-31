@@ -11,36 +11,27 @@ class PreparationsTest < ApplicationSystemTestCase
   end
 
   test "should create preparation" do
-    visit preparations_url
+    visit preparations_url(@preparation)
     click_on "New preparation"
 
-    # Ensure new dish field is visible by clearing out the selection (or manually trigger JS)
-    find("select#preparation_dish_id").find('option[value=""]').select_option # This ensures no dish is selected
+    fill_in "preparation_new_dish_name", with: "Completely New Dish"
+    fill_in "preparation_new_holiday_name", with: "New Holiday"
 
-    # Now that the new dish name field should be visible, fill it in
-    fill_in "New dish name", with: "Completely New Dish"
-    fill_in "New dish description", with: "Description of the new dish"
-    fill_in "Date cooked", with: @preparation.date_cooked
-    fill_in "Recipe long form", with: @preparation.recipe_long_form
-    fill_in "Backstory", with: @preparation.backstory
-    click_on "Create Preparation"
-
-    assert_text "Preparation was successfully created"
-    click_on "Back"
+    click_on "Save Preparation"
+    assert_text "Preparation successfully created."
   end
 
   test "should update preparation" do
     visit preparation_url(@preparation)
     click_on "Edit this preparation", match: :first
+    fill_in "preparation_new_dish_name", with: "Completely New Dish"
+    fill_in "preparation_new_holiday_name", with: "New Holiday"
+    fill_in "preparation_date_cooked", with: @preparation.date_cooked
+    fill_in "preparation_recipe_long_form", with: @preparation.recipe_long_form
+    fill_in "preparation_backstory", with: @preparation.backstory
+    click_on "Save Preparation"
 
-    fill_in "New dish name", with: @preparation.dish_id
-    fill_in "Date cooked", with: @preparation.date_cooked
-    fill_in "Recipe long form", with: @preparation.recipe_long_form
-    fill_in "Backstory", with: @preparation.backstory
-    click_on "Update Preparation"
-
-    assert_text "Preparation was successfully updated"
-    click_on "Back"
+    assert_text "Preparation successfully updated."
   end
 
   test "should destroy preparation" do
