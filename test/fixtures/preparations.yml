@@ -4,7 +4,7 @@
 # model remove the "{}" from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: 
+one:
   dish_id: 1
   date_cooked: 2023-10-01 12:00:00
   recipe_long_form: "Boil pasta. Fry pancetta. Mix eggs and cheese. Combine all ingredients."
@@ -12,7 +12,7 @@ one:
   created_at: 2023-10-01 12:00:00
   updated_at: 2023-10-01 12:00:00
 
-two: 
+two:
   dish_id: 2
   date_cooked: 2023-10-02 18:30:00
   recipe_long_form: "Prepare dough. Add tomato sauce and cheese. Bake in oven. Add basil."
