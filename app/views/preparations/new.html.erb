@@ -14,14 +14,15 @@
 
   <div>
     <%= f.label :dish_id, "Dish" %>
-    <%= f.collection_select(:dish_id, Dish.all, :id, :name, prompt: "Select an existing dish", data: { action: "change->dish-holiday-form#addNewDish" }) %>
+    <%= f.collection_select(:dish_id, Dish.all, :id, :name, { prompt: "Select an existing dish" }, { data: { action: "change->dish-holiday-form#addNewDish" }} ) %>	
+
     <%= f.text_field :new_dish_name, placeholder: "Or enter a new dish name", data: { dish_holiday_form_target: "newDishField" } %>
     <%= f.text_area :new_dish_description, placeholder: "Enter dish description (optional)", data: { dish_holiday_form_target: "newDishDescription" } %>
   </div>
 
   <div>
     <%= f.label :holiday_id, "Holiday" %>
-    <%= f.collection_select(:holiday_id, Holiday.all, :id, :name, prompt: "Select an existing holiday", data: { action: "change->dish-holiday-form#addNewHoliday" }) %>
+    <%= f.collection_select(:holiday_id, Holiday.all, :id, :name, { prompt: "Select an existing holiday" }, { data: { action: "change->dish-holiday-form#addNewHoliday" }} ) %>
     <%= f.text_field :new_holiday_name, placeholder: "Or enter a new holiday name", data: { dish_holiday_form_target: "newHolidayField" } %>
     <%= f.text_area :new_holiday_description, placeholder: "Enter holiday description (optional)", data: { dish_holiday_form_target: "newHolidayDescription" } %>
   </div>

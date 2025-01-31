@@ -1,9 +1,8 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  description: MyText
-
+  name: "Pasta Carbonara"
+  description: "Classic Roman pasta with pancetta, eggs, and cheese."
 two:
-  name: MyString
-  description: MyText
+  name: "Pizza Margherita"
+  description: "Simple pizza with tomato sauce, mozzarella, and fresh basil."
