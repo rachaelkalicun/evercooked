@@ -135,7 +135,7 @@ class PreparationsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def preparation_params
       params.require(:preparation).permit(
-        :dish_id, :holiday_id, :backstory, :recipe_long_form, :date_cooked
+        :dish_id, :holiday_id, :backstory, :recipe_long_form, :date_cooked, :new_dish_name, :new_dish_description, :new_holiday_name, :new_holiday_description
       )
     end
 end

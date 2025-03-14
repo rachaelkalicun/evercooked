@@ -235,27 +235,33 @@ end
 
   test "should update preparation with new dish and new holiday" do
     preparation = preparations(:one)
+    new_dish_name = Faker::Lorem.word
+    new_dish_description = Faker::Lorem.paragraph
+    new_holiday_name = Faker::Lorem.word
+    new_holiday_description = Faker::Lorem.paragraph
+    backstory = Faker::Lorem.paragraph
+    recipe_long_form = Faker::Lorem.paragraph
 
     assert_difference([ "Dish.count", "Holiday.count", "Occasion.count" ]) do
       patch preparation_path(preparation), params: {
         preparation: {
-          new_dish_name: "Updated Dish",
-          new_dish_description: "Updated dish description",
-          new_holiday_name: "Updated Holiday",
-          new_holiday_description: "Updated holiday description",
-          backstory: "Updated backstory",
-          recipe_long_form: "Updated recipe",
+          new_dish_name: new_dish_name,
+          new_dish_description: new_dish_description,
+          new_holiday_name: new_holiday_name,
+          new_holiday_description: new_holiday_description,
+          backstory: backstory,
+          recipe_long_form: recipe_long_form,
           date_cooked: Date.tomorrow
         }
       }
     end
 
     preparation.reload
-    assert_equal "Updated Dish", preparation.dish.name
-    assert_equal "Updated dish description", preparation.dish.description
-    assert_equal "Updated Holiday", preparation.occasions.first.holiday.name
-    assert_equal "Updated holiday description", preparation.occasions.first.holiday.description
-    assert_equal "Updated backstory", preparation.backstory
+    assert_equal new_dish_name, preparation.dish.name
+    assert_equal new_dish_description, preparation.dish.description
+    assert_equal new_holiday_name, preparation.occasions.first.holiday.name
+    assert_equal new_holiday_description, preparation.occasions.first.holiday.description
+    assert_equal backstory, preparation.backstory
     assert_equal Date.tomorrow, preparation.date_cooked
   end
 
