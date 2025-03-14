@@ -15,13 +15,13 @@
     "vite-plugin-stimulus-hmr": "^3.0.0"
   },
   "dependencies": {
-		"autoprefixer": "^10.4.20",
     "@rails/actiontext": "^8.0.100",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.9",
     "@tailwindcss/line-clamp": "^0.4.4",
     "@tailwindcss/typography": "^0.5.15",
-		"@tailwindcss/vite": "^4.0.3",
+    "@tailwindcss/vite": "^4.0.3",
+    "autoprefixer": "^10.4.20",
     "b": "^2.0.1",
     "tailwindcss": "^4.0.0",
     "trix": "^2.1.12",
