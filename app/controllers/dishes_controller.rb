@@ -60,11 +60,11 @@ class DishesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_dish
-      @dish = Dish.find(params.expect(:id))
+      @dish = Dish.find(params.require(:id))
     end
 
     # Only allow a list of trusted parameters through.
     def dish_params
-      params.expect(dish: [ :name, :description ])
+      params.require(:dish).permit(:name, :description)
     end
 end
