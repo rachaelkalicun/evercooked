@@ -116,7 +116,10 @@ test "should not create preparation with missing required fields" do
     }
   end
 
-  assert_response :unprocessable_entity
+  assert_redirected_to new_preparation_path
+  follow_redirect!
+
+  assert_not flash[:alert].empty?, "Expected a flash alert message"
   assert_select "form"
 end
 
@@ -183,7 +186,10 @@ end
       }
     end
 
-    assert_response :unprocessable_entity
+    assert_redirected_to new_preparation_path
+    follow_redirect!
+
+    assert_not flash[:alert].empty?, "Expected a flash alert message"
     assert_select "form"
   end
 
@@ -202,7 +208,10 @@ end
       }
     end
 
-    assert_response :unprocessable_entity
+    assert_redirected_to new_preparation_path
+    follow_redirect!
+
+    assert_not flash[:alert].empty?, "Expected a flash alert message"
     assert_select "form"
   end
 
@@ -217,7 +226,10 @@ end
       }
     end
 
-    assert_response :unprocessable_entity
+    assert_redirected_to new_preparation_path
+    follow_redirect!
+
+    assert_not flash[:alert].empty?, "Expected a flash alert message"
     assert_select "form"
   end
 

@@ -12,7 +12,10 @@ class PreparationsController < ApplicationController
 
   # GET /preparations/new
   def new
-    @preparation = Preparation.new
+    filtered_params = session.delete(:preparation_params)&.reject do |k, _|
+      k.start_with?("new_") || k == "holiday_id"
+    end
+    @preparation = Preparation.new(filtered_params || {})
     @preparation.build_dish # For new dish
     @preparation.occasions.build # For new occasions
   end
@@ -23,41 +26,26 @@ class PreparationsController < ApplicationController
 
   # POST /preparations or /preparations.json
   def create
-    # Handle Dish
     dish = if preparation_params[:dish_id].present?
             Dish.find(preparation_params[:dish_id])
     else
-            # Ensure `new_dish` is always initialized
-            new_dish = Dish.new(
-              name: preparation_params[:new_dish_name],
-              description: preparation_params[:new_dish_description]
-            )
-
-            # Check if `new_dish` is valid
-            if new_dish.valid?
-              new_dish.save
-              new_dish
-            else
-              # Use `new_dish.errors` safely here
-              flash[:alert] = "Dish is invalid: #{new_dish.errors.full_messages.join(', ')}"
-              render :new, status: :unprocessable_entity and return
-            end
+      new_dish = Dish.new(name: preparation_params[:new_dish_name], description: preparation_params[:new_dish_description])
+      if new_dish.name.blank? || new_dish.description.blank?
+        flash[:alert] = "Dish name or description cannot be blank."
+        session[:preparation_params] = preparation_params
+        redirect_to new_preparation_path and return
+      end
     end
 
-    # Handle Holiday and Occasion
     holiday = if preparation_params[:holiday_id].present?
-                Holiday.find(preparation_params[:holiday_id])
+      Holiday.find(preparation_params[:holiday_id])
     else
-                new_holiday = Holiday.new(
-                  name: preparation_params[:new_holiday_name],
-                  description: preparation_params[:new_holiday_description]
-                )
-                unless new_holiday.valid?
-                  flash[:alert] = "Holiday is invalid: #{new_holiday.errors.full_messages.join(', ')}"
-                  render :new, status: :unprocessable_entity and return
-                end
-                new_holiday.save
-                new_holiday
+      new_holiday = Holiday.new(name: preparation_params[:new_holiday_name], description: preparation_params[:new_holiday_description])
+      if new_holiday.name.blank? || new_holiday.description.blank?
+        flash[:alert] = "Holiday name or description cannot be blank."
+        session[:preparation_params] = preparation_params
+        redirect_to new_preparation_path and return
+      end
     end
 
     occasion = Occasion.find_or_create_by!(holiday: holiday)
@@ -147,9 +135,7 @@ class PreparationsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def preparation_params
       params.require(:preparation).permit(
-        :dish_id, :new_dish_name, :new_dish_description,
-        :holiday_id, :new_holiday_name, :new_holiday_description,
-        :backstory, :recipe_long_form, :date_cooked
+        :dish_id, :holiday_id, :backstory, :recipe_long_form, :date_cooked
       )
     end
 end
