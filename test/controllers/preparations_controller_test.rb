@@ -27,24 +27,29 @@ class PreparationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create preparation with new dish and existing holiday" do
+    new_dish_name = Faker::Lorem.word
+    new_dish_description = Faker::Lorem.paragraph
+    backstory = Faker::Lorem.paragraph
+    recipe_long_form = Faker::Lorem.paragraph
+
     assert_difference([ "Dish.count", "Preparation.count" ], 1) do
       post preparations_path, params: {
         preparation: {
-          new_dish_name: "New Dish",
-          new_dish_description: "A newly created dish",
+          new_dish_name: new_dish_name,
+          new_dish_description: new_dish_description,
           holiday_id: @existing_holiday.id,
-          backstory: "Test backstory with new dish",
-          recipe_long_form: "Test recipe for new dish",
+          backstory: backstory,
+          recipe_long_form: recipe_long_form,
           date_cooked: Date.today
         }
       }
     end
 
     preparation = Preparation.last
-    assert_equal "New Dish", preparation.dish.name
-    assert_equal "A newly created dish", preparation.dish.description
+    assert_equal new_dish_name, preparation.dish.name
+    assert_equal new_dish_description, preparation.dish.description
     assert_equal @existing_occasion, preparation.occasions.first
-    assert_equal "Test backstory with new dish", preparation.backstory
+    assert_equal backstory, preparation.backstory
   end
 
   test "should create preparation with existing dish and new holiday" do

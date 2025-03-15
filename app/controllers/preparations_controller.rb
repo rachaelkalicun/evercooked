@@ -30,8 +30,15 @@ class PreparationsController < ApplicationController
             Dish.find(preparation_params[:dish_id])
     else
       new_dish = Dish.new(name: preparation_params[:new_dish_name], description: preparation_params[:new_dish_description])
-      if new_dish.name.blank? || new_dish.description.blank?
+      if new_dish.valid?
+        new_dish.save
+        new_dish
+      elsif new_dish.name.blank? || new_dish.description.blank?
         flash[:alert] = "Dish name or description cannot be blank."
+        session[:preparation_params] = preparation_params
+        redirect_to new_preparation_path and return
+      else
+        flash[:alert] = "Dish is invalid: #{new_dish.errors.full_messages.join(', ')}"
         session[:preparation_params] = preparation_params
         redirect_to new_preparation_path and return
       end
@@ -41,8 +48,15 @@ class PreparationsController < ApplicationController
       Holiday.find(preparation_params[:holiday_id])
     else
       new_holiday = Holiday.new(name: preparation_params[:new_holiday_name], description: preparation_params[:new_holiday_description])
-      if new_holiday.name.blank? || new_holiday.description.blank?
+      if new_holiday.valid?
+        new_holiday.save
+        new_holiday
+      elsif new_holiday.name.blank? || new_holiday.description.blank?
         flash[:alert] = "Holiday name or description cannot be blank."
+        session[:preparation_params] = preparation_params
+        redirect_to new_preparation_path and return
+      else
+        flash[:alert] = "Holiday is invalid: #{new_holiday.errors.full_messages.join(', ')}"
         session[:preparation_params] = preparation_params
         redirect_to new_preparation_path and return
       end

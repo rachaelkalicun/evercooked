@@ -1,6 +1,6 @@
 <% content_for :title, "New preparation" %>
 <% if @preparation && @preparation.errors.any? %>
-  <div class="alert alert-danger">
+  <div class="alert alert-danger text-red-400">
     <ul>
       <% @preparation.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -9,12 +9,16 @@
   </div>
 <% end %>
 
-
+<% if flash[:alert].present? %>
+  <div class="alert alert-danger text-purple-700">
+    <%= flash[:alert] %>
+  </div>
+<% end %>
 <%= form_with(model: @preparation || Preparation.new, local: true, data: { controller: "dish-holiday-form" }) do |f| %>
 
-  <div>
+  <div class="mb-24 text-yellow-400">
     <%= f.label :dish_id, "Dish" %>
-    <%= f.collection_select(:dish_id, Dish.all, :id, :name, { prompt: "Select an existing dish" }, { data: { action: "change->dish-holiday-form#addNewDish" }} ) %>	
+    <%= f.collection_select(:dish_id, Dish.all, :id, :name, { prompt: "Select an existing dish" }, { data: { action: "change->dish-holiday-form#addNewDish" }} ) %>
 
     <%= f.text_field :new_dish_name, placeholder: "Or enter a new dish name", data: { dish_holiday_form_target: "newDishField" } %>
     <%= f.text_area :new_dish_description, placeholder: "Enter dish description (optional)", data: { dish_holiday_form_target: "newDishDescription" } %>
