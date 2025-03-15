@@ -14,8 +14,9 @@ class PreparationsTest < ApplicationSystemTestCase
     visit preparations_url(@preparation)
     click_on "New preparation"
 
-    fill_in "preparation_new_dish_name", with: "Completely New Dish"
-    fill_in "preparation_new_holiday_name", with: "New Holiday"
+    fill_in "preparation_new_dish_name", with: Faker::Lorem.word
+    fill_in "preparation_new_dish_description", with: Faker::Lorem.paragraph
+    fill_in "preparation_new_holiday_name", with: Faker::Lorem.word
 
     click_on "Save Preparation"
     assert_text "Preparation successfully created."

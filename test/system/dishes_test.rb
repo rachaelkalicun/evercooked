@@ -14,7 +14,8 @@ class DishesTest < ApplicationSystemTestCase
     visit dishes_url
     click_on "New dish"
 
-    fill_in "Name", with: @dish.name
+    fill_in "Name", with: Faker::Lorem.word
+    find("#dish_description").set(Faker::Lorem.paragraph)
     click_on "Create Dish"
 
     assert_text "Dish was successfully created"
