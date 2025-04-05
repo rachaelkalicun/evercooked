@@ -38,7 +38,9 @@
   </head>
 
   <body>
-    <%= yield %>
+    <p class="notice"><%= notice %></p>
+		<p class="alert"><%= alert %></p>
+		<%= yield %>
 		<%# <div data-controller="hello">
 			<input data-hello-target="name" type="text">/</input>
 			<button data-action="click->hello#greet">Greet</button>
