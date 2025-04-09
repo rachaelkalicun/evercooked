@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root "pages#index"
   get "pages/index"
+  get "pages/dashboard"
   devise_for :users
   resources :preparations
   resources :dishes do
