@@ -25,13 +25,16 @@ class DeviseAuthTest < ApplicationSystemTestCase
   end
 
   test "sign up new user and see dashboard" do
-    email = Faker::Internet.email
-    password = Faker::Internet.password(min_length: 8)
-    user = User.create(email: email, password: password)
+    email = "fake@email.com"
+    password = "123456789"
+    user = User.create!(email: email, password: password)
+    assert user.persisted?, "User was not successfully created"
     visit pages_dashboard_path
     fill_in "Email", with: email
     fill_in "Password", with: password
+
     click_button "Log in"
+
     assert_current_path pages_dashboard_path
     assert_text "Welcome to your dashboard, #{email}"
   end
