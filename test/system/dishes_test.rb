@@ -15,7 +15,7 @@ class DishesTest < ApplicationSystemTestCase
     click_on "New dish"
 
     fill_in "Name", with: Faker::Lorem.word
-    find("#dish_description").set(Faker::Lorem.paragraph)
+    fill_in_rich_text_area "dish_description", with: Faker::Lorem.paragraph
     click_on "Create Dish"
 
     assert_text "Dish was successfully created"
