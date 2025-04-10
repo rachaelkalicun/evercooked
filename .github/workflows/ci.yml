@@ -83,7 +83,7 @@ jobs:
 
       - name: Precompile assets
         run: |
-          bin/vite build
+          bin/vite build --clear --mode=test
 
       - name: Run tests
         env:
