@@ -26,6 +26,7 @@ class DishesController < ApplicationController
   def create
     @dish = Dish.new(dish_params)
     authorize @dish
+    @dish.user = current_user
 
     respond_to do |format|
       if @dish.save

@@ -30,6 +30,7 @@ class PreparationsController < ApplicationController
             Dish.find(preparation_params[:dish_id])
     else
       new_dish = Dish.new(name: preparation_params[:new_dish_name], description: preparation_params[:new_dish_description])
+      new_dish.user = current_user
       if new_dish.valid?
         new_dish.save
         new_dish
@@ -84,6 +85,7 @@ class PreparationsController < ApplicationController
             Dish.find(preparation_params[:dish_id])
     else
             new_dish = Dish.new(name: preparation_params[:new_dish_name], description: preparation_params[:new_dish_description])
+            new_dish.user = current_user
             if new_dish.valid?
               new_dish.save
               new_dish
