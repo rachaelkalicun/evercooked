@@ -10,7 +10,8 @@ class DishesTest < ApplicationSystemTestCase
     assert_selector "h1", text: "Dishes"
   end
 
-  test "should create dish" do
+  test "should create dish for admin" do
+    sign_in_admin
     visit dishes_url
     click_on "New dish"
 
@@ -22,7 +23,21 @@ class DishesTest < ApplicationSystemTestCase
     click_on "Back"
   end
 
-  test "should update Dish" do
+  test "should not see a link for create dish for non admin user" do
+    sign_in_user
+    visit dishes_url
+    assert_no_link "New dish"
+    assert_no_button "New dish"
+  end
+
+  test "should not see a link for create dish for logged out" do
+    visit dishes_url
+    assert_no_link "New dish"
+    assert_no_button "New dish"
+  end
+
+  test "should update dish for admin" do
+    sign_in_admin
     visit dish_url(@dish)
     click_on "Edit this dish", match: :first
 
@@ -33,10 +48,37 @@ class DishesTest < ApplicationSystemTestCase
     click_on "Back"
   end
 
-  test "should destroy Dish" do
+  test "should not see a link for edit dish for non admin user" do
+    sign_in_user
+    visit dish_url(@dish)
+    assert_no_link "Edit this dish"
+    assert_no_button "Edit this dish"
+  end
+
+  test "should not see a link for edit dish for logged out" do
+    visit dish_url(@dish)
+    assert_no_link "Edit this dish"
+    assert_no_button "Edit this dish"
+  end
+
+  test "should destroy Dish for admin user" do
+    sign_in_admin
     visit dish_url(@dish)
     click_on "Destroy this dish", match: :first
 
     assert_text "Dish was successfully destroyed"
+  end
+
+  test "should not see a link for destroy Dish for non admin user" do
+    sign_in_user
+    visit dish_url(@dish)
+    assert_no_link "Destroy this dish"
+    assert_no_button "Destroy this dish"
+  end
+
+  test "should not see a link for destroy Dish for logged out" do
+    visit dish_url(@dish)
+    assert_no_link "Destroy this dish"
+    assert_no_button "Destroy this dish"
   end
 end

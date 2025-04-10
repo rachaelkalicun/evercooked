@@ -10,12 +10,31 @@ class DishesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should get new" do
+  test "should get new for admin" do
+    sign_in_admin
     get new_dish_url
     assert_response :success
   end
 
-  test "should create dish" do
+  test "should restrict access to new for non-admin logged in" do
+    sign_in_user
+    get new_dish_url
+    assert_response :redirect
+    assert_redirected_to root_path
+    follow_redirect!
+    assert_response :success
+  end
+
+  test "should restrict access to new if not logged in" do
+    get new_dish_url
+    assert_response :redirect
+    assert_redirected_to root_path
+    follow_redirect!
+    assert_response :success
+  end
+
+  test "should create dish for admin user" do
+    sign_in_admin
     assert_difference("Dish.count") do
       post dishes_url, params: { dish: { description: Faker::Lorem.paragraph, name: Faker::Lorem.word } }
     end
@@ -23,26 +42,97 @@ class DishesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to dish_url(Dish.last)
   end
 
+  test "should create dish for non admin user" do
+    sign_in_user
+    assert_difference("Dish.count") do
+      post dishes_url, params: { dish: { description: Faker::Lorem.paragraph, name: Faker::Lorem.word } }
+    end
+
+    assert_redirected_to dish_url(Dish.last)
+  end
+
+  test "should restrict create dish for logged out" do
+    post dishes_url, params: { dish: { description: Faker::Lorem.paragraph, name: Faker::Lorem.word } }
+    assert_response :redirect
+    assert_redirected_to root_path
+    follow_redirect!
+    assert_response :success
+  end
+
   test "should show dish" do
     get dish_url(@dish)
     assert_response :success
   end
 
-  test "should get edit" do
+  test "should get edit for admin" do
+    sign_in_admin
     get edit_dish_url(@dish)
     assert_response :success
   end
 
-  test "should update dish" do
+  test "should restrict edit for non admin user" do
+    sign_in_user
+    get edit_dish_url(@dish)
+    assert_response :redirect
+    assert_redirected_to root_path
+    follow_redirect!
+    assert_response :success
+  end
+
+  test "should restrict edit for logged out" do
+    get edit_dish_url(@dish)
+    assert_response :redirect
+    assert_redirected_to root_path
+    follow_redirect!
+    assert_response :success
+  end
+
+  test "should update dish for admin" do
+    sign_in_admin
     patch dish_url(@dish), params: { dish: { description: Faker::Lorem.paragraph, name: Faker::Lorem.word } }
     assert_redirected_to dish_url(@dish)
   end
 
-  test "should destroy dish" do
+  test "should restrict update dish for non admin user" do
+    sign_in_user
+    patch dish_url(@dish), params: { dish: { description: Faker::Lorem.paragraph, name: Faker::Lorem.word } }
+    assert_response :redirect
+    assert_redirected_to root_path
+    follow_redirect!
+    assert_response :success
+  end
+
+  test "should restrict update dish for logged out" do
+    patch dish_url(@dish), params: { dish: { description: Faker::Lorem.paragraph, name: Faker::Lorem.word } }
+    assert_response :redirect
+    assert_redirected_to root_path
+    follow_redirect!
+    assert_response :success
+  end
+
+  test "should destroy dish for admin" do
+    sign_in_admin
     assert_difference("Dish.count", -1) do
       delete dish_url(@dish)
     end
 
     assert_redirected_to dishes_url
+  end
+
+  test "should restrict destroy dish for non admin user" do
+    sign_in_user
+    delete dish_url(@dish)
+    assert_response :redirect
+    assert_redirected_to root_path
+    follow_redirect!
+    assert_response :success
+  end
+
+  test "should restrict destroy dish for logged out" do
+    delete dish_url(@dish)
+    assert_response :redirect
+    assert_redirected_to root_path
+    follow_redirect!
+    assert_response :success
   end
 end

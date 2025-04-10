@@ -38,6 +38,8 @@
   </head>
 
   <body>
+		<p>Are you an admin? <%= current_user&.admin? %></p>
+		<p>Are you logged in? <%= user_signed_in? %></p>
     <p class="notice"><%= notice %></p>
 		<p class="alert"><%= alert %></p>
 		<%= yield %>
