@@ -81,6 +81,10 @@ jobs:
       - name: Install Yarn packages
         run: yarn
 
+      - name: Precompile assets
+        run: |
+          bin/vite build
+
       - name: Run tests
         env:
           RAILS_ENV: test
