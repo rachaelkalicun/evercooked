@@ -10,6 +10,16 @@ module ActiveSupport
 
     include Devise::Test::IntegrationHelpers
 
+    def sign_in_admin
+      admin ||= users(:one)
+      sign_in admin
+    end
+
+    def sign_in_user
+      user ||= users(:two)
+      sign_in user
+    end
+
     # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
     fixtures :all
 
