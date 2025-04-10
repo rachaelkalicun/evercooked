@@ -3,6 +3,8 @@
 one:
   name: "Pasta Carbonara"
   description: "Classic Roman pasta with pancetta, eggs, and cheese."
+  user_id: 1
 two:
   name: "Pizza Margherita"
   description: "Simple pizza with tomato sauce, mozzarella, and fresh basil."
+  user_id: 2

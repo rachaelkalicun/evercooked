@@ -2,11 +2,17 @@ require "test_helper"
 
 class DishTest < ActiveSupport::TestCase
   def setup
-    @dish = Dish.new(name: "Test Dish", description: "A sample dish")
+    @dish = Dish.new(name: "Test Dish", description: "A sample dish", user_id: 1)
   end
 
   test "should be valid with valid attributes" do
     assert @dish.valid?
+  end
+
+  test "should be invalid without a user" do
+    @dish.user_id = nil
+    assert_not @dish.valid?
+    assert_includes @dish.errors[:user], "must exist"
   end
 
   test "should be invalid without a name" do

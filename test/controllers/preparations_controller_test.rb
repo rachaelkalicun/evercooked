@@ -243,6 +243,7 @@ end
   end
 
   test "should update preparation with new dish and new holiday" do
+    sign_in_user
     preparation = preparations(:one)
     new_dish_name = Faker::Lorem.word
     new_dish_description = Faker::Lorem.paragraph
@@ -292,6 +293,7 @@ end
   end
 
   test "should update preparation with valid new dish and new holiday" do
+    sign_in_user
     preparation = preparations(:one)
 
     assert_difference("Dish.count", 1) do
