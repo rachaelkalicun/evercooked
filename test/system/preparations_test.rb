@@ -11,6 +11,7 @@ class PreparationsTest < ApplicationSystemTestCase
   end
 
   test "should create preparation" do
+    sign_in_user
     visit preparations_url(@preparation)
     click_on "New preparation"
 
