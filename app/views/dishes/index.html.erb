@@ -13,4 +13,6 @@
   <% end %>
 </div>
 
-<%= link_to "New dish", new_dish_path %>
+<% if current_user&.admin? %>
+	<%= link_to "New dish", new_dish_path %>
+<% end %>

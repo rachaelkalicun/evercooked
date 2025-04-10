@@ -1,5 +1,6 @@
 class DishesController < ApplicationController
   before_action :set_dish, only: %i[ show edit update destroy ]
+  after_action :verify_authorized, except: %i[ index show ]
 
   # GET /dishes or /dishes.json
   def index
@@ -13,15 +14,18 @@ class DishesController < ApplicationController
   # GET /dishes/new
   def new
     @dish = Dish.new
+    authorize @dish
   end
 
   # GET /dishes/1/edit
   def edit
+    authorize @dish
   end
 
   # POST /dishes or /dishes.json
   def create
     @dish = Dish.new(dish_params)
+    authorize @dish
 
     respond_to do |format|
       if @dish.save
@@ -36,6 +40,7 @@ class DishesController < ApplicationController
 
   # PATCH/PUT /dishes/1 or /dishes/1.json
   def update
+    authorize @dish
     respond_to do |format|
       if @dish.update(dish_params)
         format.html { redirect_to @dish, notice: "Dish was successfully updated." }
@@ -49,6 +54,7 @@ class DishesController < ApplicationController
 
   # DELETE /dishes/1 or /dishes/1.json
   def destroy
+    authorize @dish
     @dish.destroy!
 
     respond_to do |format|
@@ -58,12 +64,10 @@ class DishesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_dish
       @dish = Dish.find(params.require(:id))
     end
 
-    # Only allow a list of trusted parameters through.
     def dish_params
       params.require(:dish).permit(:name, :description)
     end
