@@ -81,9 +81,15 @@ jobs:
       - name: Install Yarn packages
         run: yarn
 
+      - name: Build Vite assets
+        run: |
+          bundle exec rake vite:build
+          cat public/vite/manifest.json
+
       - name: Run tests
         env:
           RAILS_ENV: test
+          VITE_RUBY_DEBUG: true
           # REDIS_URL: redis://localhost:6379/0
         run: bin/rails db:test:prepare test test:system
 
