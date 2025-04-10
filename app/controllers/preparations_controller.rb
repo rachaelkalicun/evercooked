@@ -1,5 +1,6 @@
 class PreparationsController < ApplicationController
   before_action :set_preparation, only: %i[ show edit update destroy ]
+  after_action :verify_authorized, except: %i[ index show ]
 
   # GET /preparations or /preparations.json
   def index
