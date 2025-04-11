@@ -19,9 +19,9 @@ class DeviseAuthTest < ApplicationSystemTestCase
   test "sign in existing user and see dashboard" do
     visit root_path
     assert_text "Welcome to Evercooked"
-    sign_in users(:one)
+    sign_in_user
     visit pages_dashboard_path
-    assert_text "Welcome to your dashboard, #{users(:one).email}"
+    assert_text "Welcome to your dashboard, #{users(:two).email}"
   end
 
   test "sign up new user and see dashboard" do

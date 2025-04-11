@@ -30,7 +30,7 @@ class DishesControllerTest < ActionDispatch::IntegrationTest
   test "should restrict access to new if not logged in" do
     get new_dish_url
     assert_response :redirect
-    assert_redirected_to root_path
+    assert_redirected_to new_user_session_path
     follow_redirect!
     assert_response :success
   end
@@ -54,7 +54,7 @@ class DishesControllerTest < ActionDispatch::IntegrationTest
   test "should restrict create dish for logged out" do
     post dishes_url, params: { dish: { name: Faker::Lorem.word, description: Faker::Lorem.paragraph } }
     assert_response :redirect
-    assert_redirected_to root_path
+    assert_redirected_to new_user_session_path
     follow_redirect!
     assert_response :success
   end
@@ -83,7 +83,7 @@ class DishesControllerTest < ActionDispatch::IntegrationTest
   test "should restrict edit for logged out" do
     get edit_dish_url(@existing_dish)
     assert_response :redirect
-    assert_redirected_to root_path
+    assert_redirected_to new_user_session_path
     follow_redirect!
     assert_response :success
   end
@@ -107,7 +107,7 @@ class DishesControllerTest < ActionDispatch::IntegrationTest
   test "should restrict update dish for logged out" do
     patch dish_url(@existing_dish), params: { dish: { name: Faker::Lorem.word, description: Faker::Lorem.paragraph } }
     assert_response :redirect
-    assert_redirected_to root_path
+    assert_redirected_to new_user_session_path
     follow_redirect!
     assert_response :success
   end
@@ -133,7 +133,7 @@ class DishesControllerTest < ActionDispatch::IntegrationTest
   test "should restrict destroy dish for logged out" do
     delete dish_url(@existing_dish)
     assert_response :redirect
-    assert_redirected_to root_path
+    assert_redirected_to new_user_session_path
     follow_redirect!
     assert_response :success
   end

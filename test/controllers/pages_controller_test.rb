@@ -20,12 +20,11 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
     assert_match "You need to sign in or sign up", @response.body
   end
 
-  test "authenticated user cannot access dashboard" do
-    user = users(:one)
-    sign_in user
+  test "authenticated user can access dashboard" do
+    sign_in_user
     get pages_dashboard_url
     assert_response :success
     assert_match "Welcome to your dashboard", @response.body
-    assert_match user.email, @response.body
+    assert_match users(:two).email, @response.body
   end
 end
