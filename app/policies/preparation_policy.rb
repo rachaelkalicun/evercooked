@@ -1,4 +1,4 @@
-class PreparationsPolicy < ApplicationPolicy
+class PreparationPolicy < ApplicationPolicy
   # NOTE: Up to Pundit v2.3.1, the inheritance was declared as
   # `Scope < Scope` rather than `Scope < ApplicationPolicy::Scope`.
   # In most cases the behavior will be identical, but if updating existing
@@ -14,7 +14,7 @@ class PreparationsPolicy < ApplicationPolicy
   end
 
   def create?
-    user.present?
+    true
   end
 
   def new?
@@ -22,7 +22,7 @@ class PreparationsPolicy < ApplicationPolicy
   end
 
   def update?
-    user&.admin?
+    user&.admin? || record.user == user
   end
 
   def edit?
@@ -30,7 +30,7 @@ class PreparationsPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user&.admin?
+    user&.admin? || record.user == user
   end
 
   class Scope < ApplicationPolicy::Scope
@@ -52,5 +52,4 @@ class PreparationsPolicy < ApplicationPolicy
     private
     attr_reader :user, :scope
   end
-
 end
