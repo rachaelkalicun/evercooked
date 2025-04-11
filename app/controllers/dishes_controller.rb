@@ -1,6 +1,7 @@
 class DishesController < ApplicationController
   before_action :set_dish, only: %i[ show edit update destroy ]
-  after_action :verify_authorized, except: %i[ index show ]
+  before_action :authenticate_user!, except: %i[ index show ]
+  after_action :verify_authorized, except: %i[ index show create ]
 
   # GET /dishes or /dishes.json
   def index
@@ -25,7 +26,6 @@ class DishesController < ApplicationController
   # POST /dishes or /dishes.json
   def create
     @dish = Dish.new(dish_params)
-    authorize @dish
     @dish.user = current_user
 
     respond_to do |format|
