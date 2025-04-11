@@ -2,7 +2,7 @@ require "application_system_test_case"
 
 class PreparationsTest < ApplicationSystemTestCase
   setup do
-    @preparation = preparations(:one)
+    @preparation = preparations(:two)
   end
 
   test "visiting the index" do
@@ -24,6 +24,7 @@ class PreparationsTest < ApplicationSystemTestCase
   end
 
   test "should update preparation" do
+    sign_in_user
     visit preparation_url(@preparation)
     click_on "Edit this preparation", match: :first
     fill_in "preparation_new_dish_name", with: "Completely New Dish"
@@ -37,6 +38,7 @@ class PreparationsTest < ApplicationSystemTestCase
   end
 
   test "should destroy preparation" do
+    sign_in_user
     visit preparation_url(@preparation)
     click_on "Destroy this preparation", match: :first
 

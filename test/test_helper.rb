@@ -20,6 +20,11 @@ module ActiveSupport
       sign_in user
     end
 
+    def sign_in_user_three
+      user ||= users(:three)
+      sign_in user
+    end
+
     # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
     fixtures :all
 

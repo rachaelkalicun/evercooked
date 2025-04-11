@@ -1,5 +1,7 @@
 class PreparationsController < ApplicationController
   before_action :set_preparation, only: %i[ show edit update destroy ]
+  after_action  :verify_authorized, except: %i[ index show create new ]
+  before_action :authenticate_user!, except: %i[ index show ]
 
   # GET /preparations or /preparations.json
   def index
@@ -22,6 +24,8 @@ class PreparationsController < ApplicationController
 
   # GET /preparations/1/edit
   def edit
+    @preparation = Preparation.find(params[:id])
+    authorize @preparation
   end
 
   # POST /preparations or /preparations.json
@@ -80,7 +84,9 @@ class PreparationsController < ApplicationController
 
   # PATCH/PUT /preparations/1 or /preparations/1.json
   def update
-    # Handle Dish
+    @preparation = Preparation.find(params[:id])
+    authorize @preparation
+
     dish = if preparation_params[:dish_id].present?
             Dish.find(preparation_params[:dish_id])
     else
@@ -130,6 +136,7 @@ class PreparationsController < ApplicationController
   # DELETE /preparations/1 or /preparations/1.json
   def destroy
     @preparation = Preparation.find(params[:id])
+    authorize @preparation
     @preparation.destroy
     redirect_to preparations_url, notice: "Preparation was successfully destroyed."
   end

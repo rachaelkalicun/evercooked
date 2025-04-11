@@ -12,3 +12,7 @@ two:
   id: 2
   email: <%= Faker::Internet.email %>
   admin: false
+three:
+  id: 3
+  email: <%= Faker::Internet.email %>
+  admin: false
