@@ -8,6 +8,7 @@ class PreparationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create preparation with existing dish and holiday" do
+    sign_in_user
     assert_difference("Preparation.count", 1) do
       post preparations_path, params: {
         preparation: {
@@ -31,6 +32,7 @@ class PreparationsControllerTest < ActionDispatch::IntegrationTest
     new_dish_description = Faker::Lorem.paragraph
     backstory = Faker::Lorem.paragraph
     recipe_long_form = Faker::Lorem.paragraph
+    sign_in_user
 
     assert_difference([ "Dish.count", "Preparation.count" ], 1) do
       post preparations_path, params: {
@@ -53,6 +55,7 @@ class PreparationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create preparation with existing dish and new holiday" do
+    sign_in_user
     assert_difference([ "Holiday.count", "Occasion.count", "Preparation.count" ], 1) do
       post preparations_path, params: {
         preparation: {
@@ -78,6 +81,7 @@ class PreparationsControllerTest < ActionDispatch::IntegrationTest
   end
 
 test "should create preparation with new dish and new holiday" do
+  sign_in_user
   assert_difference([ "Dish.count", "Holiday.count", "Occasion.count", "Preparation.count" ], 1) do
     post preparations_path, params: {
       preparation: {
@@ -239,6 +243,7 @@ end
   end
 
   test "should update preparation with new dish and new holiday" do
+    sign_in_user
     preparation = preparations(:one)
     new_dish_name = Faker::Lorem.word
     new_dish_description = Faker::Lorem.paragraph
@@ -288,6 +293,7 @@ end
   end
 
   test "should update preparation with valid new dish and new holiday" do
+    sign_in_user
     preparation = preparations(:one)
 
     assert_difference("Dish.count", 1) do

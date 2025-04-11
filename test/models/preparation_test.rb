@@ -5,6 +5,7 @@ class PreparationTest < ActiveSupport::TestCase
     @dish = dishes(:one)
     @preparation = preparations(:one)
     @holiday = holidays(:existing_holiday)
+    @user = users(:one)
   end
   # test "the truth" do
   #   assert true
@@ -14,32 +15,59 @@ class PreparationTest < ActiveSupport::TestCase
     assert_not preparation.save, "Saved the preparation without a dish"
   end
 
-  test "should save preparation with dish" do
+  test "should not save preparation without user" do
     preparation = Preparation.new
     preparation.dish = Dish.create(name: Faker::Lorem.word, description: Faker::Lorem.paragraph)
+    assert_not preparation.save, "Saved the preparation without a user"
+  end
+
+  test "should save preparation with dish" do
+    dish = Dish.create(name: Faker::Lorem.word, description: Faker::Lorem.paragraph, user: @user)
+    dish.user = @user
+    assert dish.persisted?, "Dish did not save"
+
+    preparation = Preparation.new(backstory: "Test backstory", recipe_long_form: "Test recipe", date_cooked: Date.today)
+    preparation.user = @user
+    preparation.dish = dish
+
     occasion = Occasion.find_or_create_by(holiday_id: @holiday.id)
     preparation.occasions = [ occasion ]
     assert preparation.save, "Did not save the preparation with a dish"
   end
 
   test "should save preparation with dish and date cooked" do
-    preparation = Preparation.new
-    preparation.dish = Dish.create(name: Faker::Lorem.word, description: Faker::Lorem.paragraph)
+    dish = Dish.create(name: Faker::Lorem.word, description: Faker::Lorem.paragraph, user: @user)
+    dish.user = @user
+    assert dish.persisted?, "Dish did not save"
+
+    preparation = Preparation.new(backstory: "Test backstory", recipe_long_form: "Test recipe", date_cooked: Date.today)
+    preparation.user = @user
+    preparation.dish = dish
     preparation.date_cooked = DateTime.now
     assert preparation.save, "Did not save the preparation with a dish and date cooked"
   end
 
   test "should save preparation with dish, date cooked, and recipe long form" do
-    preparation = Preparation.new
-    preparation.dish = Dish.create(name: Faker::Lorem.word, description: Faker::Lorem.paragraph)
+    dish = Dish.create(name: Faker::Lorem.word, description: Faker::Lorem.paragraph, user: @user)
+    dish.user = @user
+    assert dish.persisted?, "Dish did not save"
+
+    preparation = Preparation.new(backstory: "Test backstory", recipe_long_form: "Test recipe", date_cooked: Date.today)
+    preparation.user = @user
+    preparation.dish = dish
     preparation.date_cooked = DateTime.now
     preparation.recipe_long_form = "This is a long recipe."
     assert preparation.save, "Did not save the preparation with a dish, date cooked, and recipe long form"
   end
 
   test "should save preparation with dish, date cooked, recipe long form, and backstory" do
-    preparation = Preparation.new
-    preparation.dish = Dish.create(name: Faker::Lorem.word, description: Faker::Lorem.paragraph)
+    dish = Dish.create(name: Faker::Lorem.word, description: Faker::Lorem.paragraph, user: @user)
+    dish.user = @user
+    assert dish.persisted?, "Dish did not save"
+
+    preparation = Preparation.new(backstory: "Test backstory", recipe_long_form: "Test recipe", date_cooked: Date.today)
+    preparation.user = @user
+    preparation.dish = dish
     preparation.date_cooked = DateTime.now
     preparation.recipe_long_form = "This is a long recipe."
     preparation.backstory = "This is a backstory."
@@ -47,9 +75,14 @@ class PreparationTest < ActiveSupport::TestCase
   end
 
   test "should save preparation with dish, date cooked, recipe long form, backstory, and occasions" do
-    preparation = Preparation.new
+    dish = Dish.create(name: Faker::Lorem.word, description: Faker::Lorem.paragraph, user: @user)
+    dish.user = @user
+    assert dish.persisted?, "Dish did not save"
+
+    preparation = Preparation.new(backstory: "Test backstory", recipe_long_form: "Test recipe", date_cooked: Date.today)
+    preparation.user = @user
     occasion = Occasion.find_or_create_by(holiday_id: @holiday.id)
-    preparation.dish = Dish.create(name: Faker::Lorem.word, description: Faker::Lorem.paragraph)
+    preparation.dish = dish
     preparation.date_cooked = DateTime.now
     preparation.recipe_long_form = "This is a long recipe."
     preparation.backstory = "This is a backstory."
@@ -58,8 +91,13 @@ class PreparationTest < ActiveSupport::TestCase
   end
 
   test "should save preparation with dish, date cooked, recipe long form, backstory, occasions, and image" do
-    preparation = Preparation.new
-    preparation.dish = Dish.create(name: Faker::Lorem.word, description: Faker::Lorem.paragraph)
+    dish = Dish.create(name: Faker::Lorem.word, description: Faker::Lorem.paragraph, user: @user)
+    dish.user = @user
+    assert dish.persisted?, "Dish did not save"
+
+    preparation = Preparation.new(backstory: "Test backstory", recipe_long_form: "Test recipe", date_cooked: Date.today)
+    preparation.user = @user
+    preparation.dish = dish
     preparation.date_cooked = DateTime.now
     preparation.recipe_long_form = "This is a long recipe."
     preparation.backstory = "This is a backstory."

@@ -31,6 +31,7 @@ class PreparationsController < ApplicationController
             Dish.find(preparation_params[:dish_id])
     else
       new_dish = Dish.new(name: preparation_params[:new_dish_name], description: preparation_params[:new_dish_description])
+      new_dish.user = current_user
       if new_dish.valid?
         new_dish.save
         new_dish
@@ -69,6 +70,7 @@ class PreparationsController < ApplicationController
     @preparation = Preparation.new(preparation_params.except(:new_dish_name, :new_dish_description, :new_holiday_name, :new_holiday_description, :holiday_id))
     @preparation.dish = dish
     @preparation.occasions << occasion
+    @preparation.user = current_user
 
     if @preparation.save
       redirect_to preparations_path, notice: "Preparation successfully created."
@@ -83,11 +85,8 @@ class PreparationsController < ApplicationController
     dish = if preparation_params[:dish_id].present?
             Dish.find(preparation_params[:dish_id])
     else
-            new_dish = Dish.new(
-              name: preparation_params[:new_dish_name],
-              description: preparation_params[:new_dish_description]
-            )
-
+            new_dish = Dish.new(name: preparation_params[:new_dish_name], description: preparation_params[:new_dish_description])
+            new_dish.user = current_user
             if new_dish.valid?
               new_dish.save
               new_dish
@@ -101,16 +100,11 @@ class PreparationsController < ApplicationController
     holiday = if preparation_params[:holiday_id].present?
                 Holiday.find(preparation_params[:holiday_id])
     else
-                new_holiday = Holiday.new(
-                  name: preparation_params[:new_holiday_name],
-                  description: preparation_params[:new_holiday_description]
-                )
-
+                new_holiday = Holiday.new(name: preparation_params[:new_holiday_name], description: preparation_params[:new_holiday_description])
                 unless new_holiday.valid?
                   flash[:alert] = "Holiday is invalid: #{new_holiday.errors.full_messages.join(', ')}"
                   render :edit, status: :unprocessable_entity and return
                 end
-
                 new_holiday.save
                 new_holiday
     end
